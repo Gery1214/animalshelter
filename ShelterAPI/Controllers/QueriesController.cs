@@ -37,5 +37,40 @@ namespace ShelterAPI.Controllers
                 return StatusCode(400, new { message = e.Message });
             }
         }
+
+        [HttpGet("allAnimalsWithShelter")]
+        public async Task<IActionResult> AllAnimalsWithShelter()
+        {
+            try
+            {
+                var animalsWithShelter = await _context.Animals
+                    .Join(
+                        _context.Shelters,
+                        animal => animal.ShelterId,
+                        shelter => shelter.Id,
+                        (animal, shelter) => new
+                        {
+                            animal.Id,
+                            animal.Name,
+                            animal.Species,
+                            animal.Age,
+                            animal.Weight,
+                            animal.RegTime,
+                            ShelterName = shelter.Name
+                        })
+                    .ToListAsync();
+
+                if (animalsWithShelter.Count == 0)
+                {
+                    return StatusCode(404, new { message = "Nincs megjeleníthető adat!" });
+                }
+
+                return StatusCode(200, animalsWithShelter);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, new { message = e.Message });
+            }
+        }
     }
 }
