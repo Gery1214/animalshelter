@@ -77,5 +77,15 @@
       }
     ],
     "ReturnTypes": []
+  },
+  {
+    "ContainingType": "ShelterAPI.Controllers.QueriesController",
+    "Method": "AllSheltersWithAnimals",
+    "RelativePath": "api/queries/allSheltersWithAnimals",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
   }
 ]

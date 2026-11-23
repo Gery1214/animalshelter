@@ -20,6 +20,9 @@ namespace ShelterAPI
             builder.Services.AddDbContext<AnimalshelterContext>(options =>
             options.UseMySQL(builder.Configuration.GetConnectionString("Mysql")!));
 
+            builder.Services.AddControllers().AddJsonOptions(options =>{
+            options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;});
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -30,7 +33,7 @@ namespace ShelterAPI
             }
 
             app.UseHttpsRedirection();
-
+            
             app.UseAuthorization();
 
 
