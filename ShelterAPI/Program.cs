@@ -17,11 +17,10 @@ namespace ShelterAPI
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            var app = builder.Build();
-
             builder.Services.AddDbContext<AnimalshelterContext>(options =>
             options.UseMySQL(builder.Configuration.GetConnectionString("Mysql")!));
 
+            var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

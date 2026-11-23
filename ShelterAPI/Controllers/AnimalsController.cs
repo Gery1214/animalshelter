@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShelterAPI.Models;
+using ShelterAPI.Models.DTOs;
 
 namespace ShelterAPI.Controllers
 {
@@ -7,6 +9,43 @@ namespace ShelterAPI.Controllers
     [ApiController]
     public class AnimalsController : ControllerBase
     {
+        private readonly AnimalshelterContext _context;
 
+        public AnimalsController(AnimalshelterContext context)
+        {
+            _context = context;
+        }
+        [HttpPost("newAnimal")]
+        public async Task<IActionResult> NewAnimal(AddNewAnimal newAnimalDto)
+        {
+            try
+            {
+                var animal = new Animal
+                {
+                    Id = Guid.NewGuid(),
+                    Name = newAnimalDto.Name,
+                    Species = newAnimalDto.Species,
+                    Age = newAnimalDto.Age,
+                    Weight = newAnimalDto.Weight,
+                    RegTime = DateTime.Now,
+                    ShelterId = newAnimalDto.ShelterId
+                };
+
+                if (animal != null)
+                {
+                    await _context.Animals.AddAsync(animal);
+                    await _context.SaveChangesAsync();
+
+                    return StatusCode(201, animal);
+                }
+
+                return StatusCode(404, animal);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, new { message = e.Message });
+            }
+        }
     }
 }
+

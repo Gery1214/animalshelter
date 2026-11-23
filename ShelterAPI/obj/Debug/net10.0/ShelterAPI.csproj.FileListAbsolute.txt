@@ -137,3 +137,5 @@ C:\Users\simon-kovacsg\Desktop\Backend\ShelterAPI\ShelterAPI\obj\Debug\net10.0\r
 C:\Users\simon-kovacsg\Desktop\Backend\ShelterAPI\ShelterAPI\obj\Debug\net10.0\ShelterAPI.pdb
 C:\Users\simon-kovacsg\Desktop\Backend\ShelterAPI\ShelterAPI\obj\Debug\net10.0\ShelterAPI.genruntimeconfig.cache
 C:\Users\simon-kovacsg\Desktop\Backend\ShelterAPI\ShelterAPI\obj\Debug\net10.0\ref\ShelterAPI.dll
+C:\Users\simon-kovacsg\Desktop\Backend\ShelterAPI\ShelterAPI\obj\Debug\net10.0\ShelterAPI.sourcelink.json
+C:\Users\simon-kovacsg\Desktop\Backend\ShelterAPI\ShelterAPI\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
