@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ShelterAPI.Models;
 using ShelterAPI.Models.DTOs;
 
@@ -40,6 +41,26 @@ namespace ShelterAPI.Controllers
                 }
 
                 return StatusCode(404, animal);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, new { message = e.Message });
+            }
+        }
+
+        [HttpGet("allAnimal")]
+        public async Task<IActionResult> AllAnimal()
+        {
+            try
+            {
+                var animals = await _context.Animals.ToListAsync();
+
+                if (animals.Count == 0)
+                {
+                    return StatusCode(404, new { message = "Nincs megjeleníthető állat az adatbázisban!" });
+                }
+
+                return StatusCode(200, animals);
             }
             catch (Exception e)
             {
