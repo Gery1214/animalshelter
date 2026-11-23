@@ -95,5 +95,33 @@ namespace ShelterAPI.Controllers
                 return StatusCode(400, new { message = e.Message });
             }
         }
+
+        [HttpGet("animalCountByShelter")]
+        public async Task<IActionResult> AnimalCountByShelter()
+        {
+            try
+            {
+                var result = await _context.Shelters
+                    .Select(s => new
+                    {
+                        s.Id,
+                        s.Name,
+                        AnimalCount = s.Animals.Count()
+                    })
+                    .OrderByDescending(x => x.AnimalCount)
+                    .ToListAsync();
+
+                if (result.Count == 0)
+                {
+                    return StatusCode(404, new { message = "Nincs megjeleníthető menhely!" });
+                }
+
+                return StatusCode(200, result);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, new { message = e.Message });
+            }
+        }
     }
 }
