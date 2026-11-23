@@ -86,6 +86,34 @@ namespace ShelterAPI.Controllers
                 return StatusCode(400, new { message = e.Message });
             }
         }
+
+        [HttpPut("update")]
+        public async Task<IActionResult> Update([FromQuery] Guid id, [FromBody] UpdateAnimalDTO updateAnimalDto)
+        {
+            try
+            {
+                var existingAnimal = await _context.Animals.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (existingAnimal == null)
+                {
+                    return StatusCode(404, new { message = "Nincs ilyen azonosítójú állat!" });
+                }
+
+                existingAnimal.Name = updateAnimalDto.Name;
+                existingAnimal.Species = updateAnimalDto.Species;
+                existingAnimal.Age = updateAnimalDto.Age;
+                existingAnimal.Weight = updateAnimalDto.Weight;
+                existingAnimal.ShelterId = updateAnimalDto.ShelterId;
+
+                _context.Animals.Update(existingAnimal);
+                await _context.SaveChangesAsync();
+                return StatusCode(200, existingAnimal);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, new { message = e.Message });
+            }
+        }
     }
 }
 
