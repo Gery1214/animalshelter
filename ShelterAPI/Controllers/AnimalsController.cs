@@ -67,6 +67,25 @@ namespace ShelterAPI.Controllers
                 return StatusCode(400, new { message = e.Message });
             }
         }
+        [HttpGet("byId")]
+        public async Task<IActionResult> ById([FromQuery] Guid id)
+        {
+            try
+            {
+                var animal = await _context.Animals.FirstOrDefaultAsync(x => x.Id == id);
+
+                if (animal == null)
+                {
+                    return StatusCode(404, new { message = "Nincs ilyen azonosítójú állat!" });
+                }
+
+                return StatusCode(200, animal);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, new { message = e.Message });
+            }
+        }
     }
 }
 
