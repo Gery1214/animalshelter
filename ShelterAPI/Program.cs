@@ -1,5 +1,7 @@
 
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
+using ShelterAPI.Models;
 
 namespace ShelterAPI
 {
@@ -16,6 +18,10 @@ namespace ShelterAPI
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
+
+            builder.Services.AddDbContext<AnimalshelterContext>(options =>
+            options.UseMySQL(builder.Configuration.GetConnectionString("Mysql")!));
+
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
