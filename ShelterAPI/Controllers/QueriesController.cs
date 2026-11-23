@@ -72,5 +72,28 @@ namespace ShelterAPI.Controllers
                 return StatusCode(400, new { message = e.Message });
             }
         }
+
+        [HttpGet("animalsOfShelter")]
+        public async Task<IActionResult> AnimalsOfShelter([FromQuery] Guid shelterId)
+        {
+            try
+            {
+                var shelterWithAnimals = await _context.Shelters
+                    .Include(s => s.Animals)
+                    .Where(s => s.Id == shelterId)
+                    .FirstOrDefaultAsync();
+
+                if (shelterWithAnimals == null)
+                {
+                    return StatusCode(404, new { message = "Nincs ilyen azonosítójú menhely!" });
+                }
+
+                return StatusCode(200, shelterWithAnimals);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(400, new { message = e.Message });
+            }
+        }
     }
 }
